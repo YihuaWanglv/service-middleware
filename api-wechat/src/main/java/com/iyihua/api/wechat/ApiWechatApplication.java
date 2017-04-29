@@ -1,6 +1,7 @@
 package com.iyihua.api.wechat;
 
-import com.iyihua.monitor.git.entity.GitUpdateMessage;
+
+import com.iyihua.api.wechat.entity.GitUpdateMessage;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
@@ -24,8 +25,8 @@ public class ApiWechatApplication {
 		        new RedisOptions().setHost("127.0.0.1"));
 
 		router.route().handler(BodyHandler.create());
-		router.get("/rest/hello").handler(GitMonitorApplication::handleHello);
-		router.post("/git/update").handler(GitMonitorApplication::handleGitUpdate);
+		router.get("/rest/hello").handler(ApiWechatApplication::handleHello);
+		router.post("/git/update").handler(ApiWechatApplication::handleGitUpdate);
 		vertx.createHttpServer().requestHandler(router::accept).listen(8300);
 	}
 

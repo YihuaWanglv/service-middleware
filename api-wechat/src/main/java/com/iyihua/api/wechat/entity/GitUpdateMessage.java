@@ -1,4 +1,4 @@
-package com.iyihua.monitor.git.entity;
+package com.iyihua.api.wechat.entity;
 
 public class GitUpdateMessage {
 
