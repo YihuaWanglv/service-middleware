@@ -2,6 +2,7 @@ package com.iyihua.monitor.git;
 
 import com.iyihua.monitor.git.hanlder.HooksHandler;
 import com.iyihua.monitor.git.hanlder.RedisMessageHandler;
+import com.iyihua.monitor.git.hanlder.WebHooksHandler;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServerResponse;
@@ -23,6 +24,7 @@ public class Server extends AbstractVerticle {
 		router.get("/rest/hello").handler(Server::handleHello);
 		router.post("/git/update").handler(redisMessageHanlder);
 		router.get("/git/hooks").handler(new HooksHandler(vertx));
+		router.post("/git/webhooks").handler(new WebHooksHandler(vertx));
 		JsonObject conf = config();
 
 		vertx.createHttpServer().requestHandler(router::accept).listen(conf.getInteger("http.port", 8300),
