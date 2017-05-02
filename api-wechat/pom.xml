@@ -32,8 +32,12 @@
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-redis-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>cn.com.riversoft</groupId>
+			<artifactId>weixin-mp</artifactId>
+			<version>${weixin-sdk.version}</version>
+		</dependency>
 
-		
 	</dependencies>
 	<build>
 		<plugins>

@@ -9,6 +9,8 @@
 	<modules>
 		<module>git-monitor</module>
 		<module>api-wechat</module>
+		<module>app-autopost</module>
+		<module>service-core</module>
 	</modules>
 	<properties>
 		<vertx.version>3.4.1</vertx.version>
@@ -47,6 +49,18 @@
 				<artifactId>vertx-redis-client</artifactId>
 				<version>${vertx-redis.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<!-- <version>0.11.0</version> -->
+				<version>1.16.14</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.6.2</version>
+			</dependency>
 
 			<dependency>
 				<groupId>io.vertx</groupId>
@@ -63,9 +77,15 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 				<configuration>
+					<compilerVersion>1.8</compilerVersion>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+				<version>1.16.14.0</version>
 			</plugin>
 		</plugins>
 	</build>
