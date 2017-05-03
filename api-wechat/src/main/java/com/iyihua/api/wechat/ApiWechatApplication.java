@@ -1,12 +1,10 @@
 package com.iyihua.api.wechat;
 
 
-import com.iyihua.api.wechat.entity.GitUpdateMessage;
-
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
+import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.json.Json;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -21,30 +19,22 @@ public class ApiWechatApplication {
 		VertxOptions options = new VertxOptions();
 		Vertx vertx = Vertx.vertx(options);
 		Router router = Router.router(vertx);
-		final RedisClient client = RedisClient.create(vertx,
-		        new RedisOptions().setHost("127.0.0.1"));
 
 		router.route().handler(BodyHandler.create());
-		router.get("/rest/hello").handler(ApiWechatApplication::handleHello);
-		router.post("/git/update").handler(ApiWechatApplication::handleGitUpdate);
-		vertx.createHttpServer().requestHandler(router::accept).listen(8300);
+		router.route("/").handler(ApiWechatApplication::handleHello);
+		vertx.createHttpServer().requestHandler(router::accept).listen(8302);
 	}
 
 	private static void handleHello(RoutingContext routingContext) {
 		HttpServerResponse response = routingContext.response();
-		response.putHeader("content-type", "application/json").end("Hello world");
+		HttpServerRequest request = routingContext.request();
+		String token = request.getParam("token");
+		System.err.println(token);
+		String body = routingContext.getBodyAsString();
+		System.out.println(body);
+		response.putHeader("content-type", "application/json").end("Hello wechat api");
 	}
-
-	private static void handleGitUpdate(RoutingContext routingContext) {
-		HttpServerResponse response = routingContext.response();
-		GitUpdateMessage message = Json.decodeValue(routingContext.getBodyAsString(), GitUpdateMessage.class);
-		if (message == null) {
-			sendError(400, response);
-		} else {
-			System.err.println(message.getKey());
-			response.putHeader("content-type", "application/json").end("save ok");
-		}
-	}
+	
 
 	private static void sendError(int statusCode, HttpServerResponse response) {
 		response.setStatusCode(statusCode).end();
